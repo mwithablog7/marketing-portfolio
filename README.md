@@ -115,15 +115,34 @@ Leave `cvUrl: ''` and the CV buttons disappear entirely.
 
 ### 10. Redeploy after changes
 
+The repository has two branches:
+
+- **`main`** — your source code (what you edit)
+- **`gh-pages`** — the built site (`dist/`), which is what GitHub Pages serves
+
+Editing content on `main` alone does **not** change the live site. Publish a
+new build with one command:
+
 ```bash
-npm run build
+npm run deploy
+```
+
+This runs the production build and force-pushes `dist/` to `gh-pages`.
+GitHub Pages updates the live URL within about a minute.
+
+Optionally, also save the source change to `main` for version history:
+
+```bash
 git add .
 git commit -m "Update portfolio content"
 git push
 ```
 
-GitHub Pages rebuilds automatically (the site is served from the `gh-pages`
-branch — see "Deployment" below).
+> If git ever asks "who you are", run these once:
+> ```bash
+> git config --global user.name "mwithablog7"
+> git config --global user.email "mwithablog7@users.noreply.github.com"
+> ```
 
 ---
 
@@ -152,6 +171,8 @@ marketing-portfolio/
 │   ├── favicon.svg
 │   ├── cv/                    # ← put resume.pdf here
 │   └── images/projects/       # ← put project images here
+├── scripts/
+│   └── deploy.mjs           # npm run deploy → publishes dist/ to gh-pages
 └── src/
     ├── data/
     │   ├── site.ts            # ← personal info, skills, contact, CV
